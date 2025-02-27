@@ -27,9 +27,22 @@ app.get("/api/hello", function (req, res) {
 // Vamos a responder algo en la ruta /api/:date
 app.get('/api/:date',(req,res) => {
   let date = req.params.date;
-  let objDate = new Date(date);
-  //getTime() para obtener en milisegundos
-  return res.json({unix:objDate.getTime(),utc:objDate.toUTCString()})
+  let fecha;
+
+  if(!isNaN(date)) {
+    // Si el parametro es un numero convertir a numero(milisegundos)
+    fecha = new Date(parseInt(date));
+  }
+  else {
+    // Si es una fecha convertirla a fecha
+    fecha = new Date(date);
+  }
+
+  // Verificar fecha válida
+  if(isNaN(fecha.getTime())) {
+    res.json({error: "Invalid Date"});
+  }
+  return res.json({unix:fecha.getTime(),utc:fecha.toUTCString()});
 })
 
 
