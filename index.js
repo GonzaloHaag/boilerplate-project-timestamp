@@ -24,6 +24,12 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// La ruta /api debe devolver fecha actual en milisegundos y fecha actual en fecha
+app.get('/api',(req,res) => {
+  let fecha = new Date();
+  return res.json({unix:fecha.getTime(),utc:fecha.toUTCString()});
+});
+
 // Vamos a responder algo en la ruta /api/:date
 app.get('/api/:date',(req,res) => {
   let date = req.params.date;
